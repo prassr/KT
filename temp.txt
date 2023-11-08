@@ -1,0 +1,49 @@
+The Deep Knowledge Tracing (DKT) model (Piech et al., 2015) first applies deep learning on the task. 
+DKT uses an LSTM network (Graves et al., 2013; Sutskever et al., 2014) to learn from the student-question interaction sequences. 
+At each step, the LSTM unit takes as input an interaction tuple representing which question is answered and whether the answer is correct. 
+The output is a vector of length equal to the number of knowledge concepts, where each element is a probability representing the predicted mastery level of a concept. 
+When predicting a student’s response to the next question, the element of the output vector corresponding to the concept covered by the question is used to predict the probability of correctness.
+
+Then inspired by memory-augmented neural networks (Graves et al., 2016; Santoro et al., 2016; Zhang et al., 2017) propose Dynamic Key-Value Memory Networks (DKVMN) to improve DKT’s structure. 
+DKVMN uses two memory matrices, where one is static and used to store the latent knowledge concepts of the questions, and the other is dynamic and used to represent the student knowledge state. 
+DKVMN updates the knowledge state of a student by reading from and writing to the dynamic matrix.
+
+Following this work, Abdelrahman and Wang (2019) propose Sequential Key-Value Memory Networks (SKVMN) to capture the dependencies between questions. 
+They assume that the predicted response to the next question only depends on the previous interactions to the questions with similar concepts. At each step, they introduce an additional hop-LSTM network before the output layer of DKVMN, whose LSTM units connect only the hidden states of the steps pertaining to the similar questions.
+
+
+More studies investigate the utility of recently proposed architectures. 
+For example, Pandey and Karypis (2019) propose Self-Attentive Knowledge Tracing (SAKT), 
+with the hope to handle the data sparsity problem by using the Transformer architecture (Vaswani et al., 2017). Ghosh et al. (2020) propose Attentive Knowledge Tracing (AKT), 
+which uses a series of attention networks to draw connections between the next question and past interactions. 
+
+Nakagawa et al. (2019) propose Graph-based Knowledge Tracing (GKT). 
+They construct a graph to connect related concepts. 
+When a student answers a question associated with a particular concept, GKT updates simultaneously the student’s knowledge state of the concept and the related concepts. 
+
+Guo et al. (2021) propose Adversarial Training based Knowledge Tracing (ATKT) to avoid the risk of overfitting in existing deep KT models. 
+They construct adversarial examples by adversarial perturbations, and use them with the original examples to jointly train ATKT. 
+
+To tackle the problem of sparse interactions between students and questions, Lee et al. (2022) propose several learning history augmentation methods and introduce a contrastive learning framework for knowledge tracing. 
+The proposed CL4KT model reveals semantically similar or dissimilar examples of a learning history and stimulates to learn their relationships.
+
+Another line of work attempts to incorporate additional features into the input. 
+For example, EERNN (Su et al., 2018) uses a Bi-LSTM network to obtain the text embedding of each question, and concatenates the embedding with that of the corresponding student-question interaction. 
+
+EKT (Huang et al., 2019) extends the idea and replaces the hidden states in the LSTM network with hidden matrices. 
+
+The DKT+forgetting (Nagatani et al., 2019) model uses manually-constructed features pertaining to the forgetting behavior in the learning process, and feeds the features as additional information into the DKT model. 
+
+MsaCNN (Zhang et al., 2023) captures structured features from student grade records and discovers relationships between courses, and finally integrates multi-source features to predict learning performance. 
+Other work of this line includes DKT-DSC (Minn et al., 2018), CKT (Shen et al., 2020), and HGKT (Tong et al., 2022), etc.
+
+More recent studies focus more on simulating the learning theories and behaviors. Wang et al. (2021) propose the HawkesKT model, which investigates the temporal cross-effects between different knowledge concepts, inspired by the fact that each past interaction has a dif f erent time-sensitive impact on the next interaction. 
+
+Long et al. (2021) propose Individual Estimation Knowledge Tracing (IEKT), which estimates a student’s knowledge state before answering a question and assesses her sensitivity to knowledge acquisition before updating the knowledge state.
+Shen et al. (2021) propose Learning Process-consistent Knowledge Tracing (LPKT), which monitors the knowledge state by directly simulating the learning process and provides a new paradigm that takes into account the consistency of students’ changing knowledge state. 
+
+Long et al. (2022) propose Collaborative Knowledge Tracking (CoKT), which makes full use of the student-to-student information for knowledge tracking, i.e., the responses of other students who have answered similar questions.
+
+
+[SRC: CECAKT]
+
